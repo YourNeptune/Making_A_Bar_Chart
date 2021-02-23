@@ -1,0 +1,12 @@
+svg {
+  background-color: bisque;
+}
+
+svg rect {
+  fill: teal;
+}
+
+svg text {
+  font-size: 0.9rem;
+}
+/*# sourceMappingURL=style.css.map */
