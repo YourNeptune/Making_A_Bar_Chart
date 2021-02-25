@@ -40,9 +40,12 @@
                 .attr('height', yScale.bandwidth())
                 .attr('y', d => yScale(yValue(d)));
         
-        g.append('g').call(d3.axisLeft(yScale));
+        g.append('g').call(d3.axisLeft(yScale))
+            .selectAll('.domain, .tick line').remove();
+
         g.append('g').call(d3.axisBottom(xScale).tickFormat(number => d3.format('.2s')(number).replace('G','B')))
-            .attr('transform', `translate(0, ${innerHeight})`);
+            .attr('transform', `translate(0, ${innerHeight})`)
+            .select('.domain').remove();
     };
 
     d3.csv('data/data1.csv').then(data => {
