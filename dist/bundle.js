@@ -5,8 +5,8 @@
     const width = +svg.attr('width');
     const height = +svg.attr('height');
     const margin = {
-        left: 40,
-        right: 20,
+        left: 60,
+        right: 60,
         top: 100,
         bottom: 100
     };
@@ -39,13 +39,36 @@
                 .attr('width', d => xScale(xValue(d)))
                 .attr('height', yScale.bandwidth())
                 .attr('y', d => yScale(yValue(d)));
-        
-        g.append('g').call(d3.axisLeft(yScale))
-            .selectAll('.domain, .tick line').remove();
 
+        const yAxisG = 
+        g.append('g').call(d3.axisLeft(yScale));
+        yAxisG.selectAll('.domain, .tick line').remove();
+
+        // y-Label:
+        yAxisG.append('text')
+            .attr('fill', 'black')
+            .attr('y', innerHeight / 2)
+            .attr("transform", `translate(160,250) rotate(90)`)
+            .text('Countries');
+
+        const xAxisG = 
         g.append('g').call(d3.axisBottom(xScale).tickFormat(number => d3.format('.2s')(number).replace('G','B')))
-            .attr('transform', `translate(0, ${innerHeight})`)
-            .select('.domain').remove();
+            .attr('transform', `translate(0, ${innerHeight})`);
+        xAxisG.select('.domain').remove();
+
+        // x-Label:
+        xAxisG.append('text').attr('class', 'xLabel')
+            .attr('fill', 'black')
+            .attr('x', innerWidth / 2)
+            .attr('y', 60)
+            .text('Population');
+
+        // Title:
+        g.append('text')
+            .attr('class', 'title')
+            .attr('x', innerWidth / 6)
+            .attr('y', -20)
+            .text('Top 7 Most Pupulous Countries');
     };
 
     d3.csv('data/data1.csv').then(data => {
