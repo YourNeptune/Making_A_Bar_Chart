@@ -5,8 +5,8 @@
     const width = +svg.attr('width');
     const height = +svg.attr('height');
     const margin = {
-        left: 60,
-        right: 60,
+        left: 80,
+        right: 80,
         top: 100,
         bottom: 100
     };
@@ -31,36 +31,33 @@
         
         const g = svg.append('g')
             .attr('transform', `translate(${margin.left}, ${margin.top})`);
-        
-        g.selectAll('rect')
-            .data(data)
-            .enter()
-            .append('rect')
-                .attr('width', d => xScale(xValue(d)))
-                .attr('height', yScale.bandwidth())
-                .attr('y', d => yScale(yValue(d)));
 
         const yAxisG = 
         g.append('g').call(d3.axisLeft(yScale));
         yAxisG.selectAll('.domain, .tick line').remove();
 
         // y-Label:
-        yAxisG.append('text')
+        yAxisG.append('text').attr('class', 'label')
             .attr('fill', 'black')
             .attr('y', innerHeight / 2)
             .attr("transform", `translate(160,250) rotate(90)`)
             .text('Countries');
 
+        // x-axis：
+        const x_axis = d3.axisBottom(xScale)
+            .tickFormat(number => d3.format('.2s')(number).replace('G','B'))
+            .tickSize(-innerHeight);
+
         const xAxisG = 
-        g.append('g').call(d3.axisBottom(xScale).tickFormat(number => d3.format('.2s')(number).replace('G','B')))
+        g.append('g').call(x_axis)
             .attr('transform', `translate(0, ${innerHeight})`);
         xAxisG.select('.domain').remove();
 
         // x-Label:
-        xAxisG.append('text').attr('class', 'xLabel')
+        xAxisG.append('text').attr('class', 'label')
             .attr('fill', 'black')
             .attr('x', innerWidth / 2)
-            .attr('y', 60)
+            .attr('y', 50)
             .text('Population');
 
         // Title:
@@ -69,6 +66,15 @@
             .attr('x', innerWidth / 6)
             .attr('y', -20)
             .text('Top 7 Most Pupulous Countries');
+
+        // Data (rect):
+        g.selectAll('rect')
+        .data(data)
+        .enter()
+        .append('rect')
+            .attr('width', d => xScale(xValue(d)))
+            .attr('height', yScale.bandwidth())
+            .attr('y', d => yScale(yValue(d)));
     };
 
     d3.csv('data/data1.csv').then(data => {

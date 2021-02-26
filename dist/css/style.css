@@ -1,10 +1,10 @@
 svg {
-  background-color: bisque;
+  background-color: #EFECEA;
   font-family: Arial, Helvetica, sans-serif;
 }
 
 svg rect {
-  fill: teal;
+  fill: #137B80;
 }
 
 svg text {
@@ -13,5 +13,19 @@ svg text {
 
 svg .title {
   font-size: 2rem;
+}
+
+svg .tick text {
+  color: #635F5D;
+}
+
+svg .tick line {
+  stroke: #C0C0BB;
+  z-index: -1;
+}
+
+svg .label {
+  font-weight: bold;
+  font-size: 1.5em;
 }
 /*# sourceMappingURL=style.css.map */
